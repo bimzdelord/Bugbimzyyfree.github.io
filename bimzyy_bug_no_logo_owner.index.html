@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>TOXIC D Bimzy🙏🇮🇩 - </title>
+  <style>
+    :root{
+      --bg-deep:#050607;
+      --panel:#081015;
+      --neon-cyan: #21f4d6;
+      --neon-cyan-2: #00f2c2;
+      --muted:#9fb4b0;
+      --accent:#00f2c2;
+      --danger:#ff3b3b;
+      --card-radius:18px;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; background:linear-gradient(180deg,#000814 0%, #071016 40%), radial-gradient(circle at 10% 5%, rgba(0,200,140,0.03), transparent 12%); color:#e8ffff}
+    body{display:flex;align-items:center;justify-content:center;padding:20px}
+
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.28));
+      border-radius:var(--card-radius);
+      padding:26px;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.7);
+      border: 1px solid rgba(0,255,190,0.06);
+      margin-top:12px;
+      width:100%;max-width:420px;
+    }
+
+    .big-title{
+      font-size:26px;
+      text-align:center;
+      margin:16px 0 10px;
+      color:var(--neon-cyan);
+      letter-spacing:1px;
+      text-shadow: 0 0 12px rgba(0,242,194,0.8);
+    }
+    .sub{font-size:13px;text-align:center;opacity:0.8;margin-bottom:16px}
+
+    label{display:block;font-size:13px;margin:8px 0 6px}
+    input, select{
+      width:100%;
+      padding:12px;
+      border-radius:12px;
+      border:none;
+      outline:none;
+      background:#0f171a;
+      color:var(--neon-cyan);
+      margin-bottom:14px;
+    }
+    .btn{
+      width:100%;
+      padding:12px;
+      border-radius:24px;
+      border:none;
+      background:var(--accent);
+      color:#000;
+      font-weight:700;
+      cursor:pointer;
+      transition:0.2s;
+    }
+    .btn:hover{background:#00dba5}
+    .btn.ghost{background:transparent;color:var(--neon-cyan);border:1px solid rgba(0,255,200,0.2)}
+    .center{display:flex;gap:10px;justify-content:center}
+
+    .status{margin-top:14px;padding:12px;border-radius:8px;background:rgba(0,0,0,0.2);text-align:center;font-weight:700}
+    .hidden{display:none}
+    .warning{font-size:12px;color:#ffb3b3;text-align:center;margin-top:8px}
+  </style>
+</head>
+<body>
+  <div class="card" id="loginCard">
+    <div class="big-title">🇮🇩𝐓𝐎𝐗𝐈𝐂 𝐃 𝐁𝐈𝐌𝐙𝐘🇮🇩</div>
+    <p class="sub">𝐕𝐄𝐑𝐒𝐈𝐎𝐍 2 (𝐅𝐔𝐍𝐂 𝐏𝐑𝐄𝐌😋) - Masukin USN sama PW nya</p>
+    <label>Username</label>
+    <input id="username" type="text" placeholder="Username" />
+    <label>Password</label>
+    <input id="password" type="password" placeholder="Password" />
+    <div class="center">
+      <button class="btn" id="loginBtn">Login</button>
+      <button class="btn ghost" id="prefillBtn">Isi kredensial</button>
+    </div>
+    <div id="loginWarning" class="warning"></div>
+  </div>
+
+  <div class="card hidden" id="mainCard">
+    <div class="big-title">𝐓𝐎𝐗𝐈𝐂 𝐃 𝐁𝐈𝐌𝐙𝐘</div>
+    <p class="sub">ᴍᴀsᴜᴋᴀɴ ɴᴏᴍᴏʀ ᴛᴀʀɢᴇᴛ ʟᴜ.</p>
+
+    <label>ɴᴏᴍᴏʀ ᴛᴀʀɢᴇᴛɴʏᴀ👹</label>
+    <input id="target" type="text" placeholder="+628xxxxxxxx" />
+
+    <label>ᴛʏᴘᴇ ʙᴜɢɴʏᴀ👹</label>
+    <select id="bugType">
+      <option>𝔣𝔬𝔯𝔠𝔢 𝔠𝔩𝔬𝔰𝔢🚪</option>
+      <option>𝔠𝔯𝔞𝔰𝔥 𝔞𝔫𝔡𝔯𝔬📱</option>
+      <option>𝔅𝔩𝔞𝔫𝔨 𝔰𝔠𝔯𝔢𝔢𝔫🖥️</option>
+      <option>𝔪𝔬𝔨𝔞𝔡😜</option>
+    </select>
+
+    <button class="btn" id="sendBtn">⚡ 𝖈𝖗𝖔𝖙𓁹</button>
+
+    <div id="statusBox" class="status hidden"></div>
+  </div>
+
+  <script>
+    const loginCard = document.getElementById('loginCard');
+    const mainCard = document.getElementById('mainCard');
+    const loginBtn = document.getElementById('loginBtn');
+    const prefillBtn = document.getElementById('prefillBtn');
+    const usernameInp = document.getElementById('username');
+    const passwordInp = document.getElementById('password');
+    const loginWarning = document.getElementById('loginWarning');
+    const statusBox = document.getElementById('statusBox');
+    const sendBtn = document.getElementById('sendBtn');
+
+    // Owner identifier: set when owner logs in successfully on this device.
+    // This is stored in localStorage, so only this browser/device keeps it.
+    const OWNER_KEY = 'bimzy_owner_v1';
+    const OWNER_ID = 'bimzy123';
+
+    // Prefill: only works if this device has been marked as owner (localStorage)
+    prefillBtn.addEventListener('click', () => {
+      const isOwner = localStorage.getItem(OWNER_KEY) === OWNER_ID;
+      if(isOwner){
+        usernameInp.value = 'bimzy123';
+        passwordInp.value = 'bimzy123';
+        loginWarning.textContent = 'Kredensial telah diisi (owner device).';
+        setTimeout(()=> loginWarning.textContent = '', 2200);
+      } else {
+        // Message shown to non-owner devices when they try to use prefill
+        loginWarning.textContent = 'CUMA BUAT OWNER BIMZX DEK💦🤪';
+        setTimeout(()=> loginWarning.textContent = '', 2500);
+      }
+    });
+
+    loginBtn.addEventListener('click', ()=>{
+      const u = usernameInp.value.trim();
+      const p = passwordInp.value.trim();
+      if(u === 'bimzy123' && p === 'bimzy123'){
+        // Mark this device as owner so prefill works here in future
+        try{ localStorage.setItem(OWNER_KEY, OWNER_ID); }catch(e){ /* ignore storage errors */ }
+        loginCard.classList.add('hidden');
+        mainCard.classList.remove('hidden');
+      } else {
+        alert('Login gagal — gunakan kredensial yang bener.');
+      }
+    });
+
+    function statusFlash(msg, timeout=1800){
+      statusBox.classList.remove('hidden');
+      statusBox.textContent = msg;
+      setTimeout(()=>{statusBox.classList.add('hidden')}, timeout);
+    }
+
+    sendBtn.addEventListener('click', ()=>{
+      const target = document.getElementById('target').value.trim();
+      const bug = document.getElementById('bugType').value;
+      if(!target){ statusFlash('Masukkan nomor target😈.'); return }
+
+      statusBox.classList.remove('hidden');
+      statusBox.textContent = '𝑩𝑼𝑮 𝑺𝑬𝑫𝑨𝑵𝑮 𝑫𝑰𝑲𝑰𝑹𝑰𝑴 𝑯𝑨𝑹𝑨𝑷 𝑺𝑨𝑩𝑨𝑹 𝑵𝑮𝑬𝑵𝑻𝑶𝑻';
+      sendBtn.disabled = true; sendBtn.textContent = '𝑺𝑬𝑵𝑫';
+
+      const wait = 2000 + Math.floor(Math.random()*2200);
+      setTimeout(()=>{
+        statusBox.textContent = '𝑩𝑼𝑮 𝑺𝑼𝑪𝑪𝑬𝑺 𝑻𝑬𝑹𝑲𝑰𝑹𝑰𝑴🤪 𝑪𝑬𝑲 𝑻𝑨𝑹𝑮𝑬𝑻 𝑫𝑰𝑱𝑨𝑴𝑰𝑵 𝑪1';
+        sendBtn.disabled = false; sendBtn.textContent = '⚡ EXECUTE';
+      }, wait);
+    });
+
+    // Optional: if the device was previously marked owner, give subtle hint
+    window.addEventListener('load', ()=>{
+      const isOwner = localStorage.getItem(OWNER_KEY) === OWNER_ID;
+      if(isOwner){
+        // show a small hint for owner
+        loginWarning.textContent = 'Device ini terdaftar sebagai OWNER.';
+        setTimeout(()=> loginWarning.textContent = '', 1600);
+      }
+    });
+  </script>
+</body>
+</html>
