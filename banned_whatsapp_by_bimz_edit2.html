@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>👹BANNED WHATSAPP BY BIMZ👹</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Arial Black', sans-serif;
+      background: #220000;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    h1 {
+      color: #ff1b1b;
+      text-shadow: 0 0 20px #ff0000;
+      margin-bottom: 20px;
+      font-size: 1.8rem;
+      letter-spacing: 2px;
+    }
+
+    .container {
+      background: rgba(50,0,0,0.85);
+      padding: 26px;
+      border-radius: 12px;
+      width: 92%;
+      max-width: 420px;
+      box-shadow: 0 0 40px rgba(255,0,0,0.45);
+      backdrop-filter: blur(3px);
+    }
+
+    input, select, button {
+      display: block;
+      margin: 12px auto;
+      padding: 12px;
+      width: 86%;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+    }
+
+    input { background: #330000; color: white; }
+    select { background: #440000; color: white; }
+
+    button {
+      background: #ff1b1b;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.25s;
+    }
+    button:hover { transform: scale(1.03); background: #ff4b4b; }
+
+    .success {
+      display: none;
+      color: #ffdddd;
+      font-size: 1.2rem;
+      text-shadow: 0 0 8px #ff0000;
+      margin-top: 16px;
+    }
+
+    .note {
+      font-size: 0.95rem;
+      margin-top: 8px;
+      color: #ffdcdc;
+    }
+
+    /* Modal login */
+    .modal {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(180deg, rgba(0,0,0,0.75), rgba(0,0,0,0.85));
+      z-index: 50;
+      padding: 20px;
+    }
+    .login-box {
+      background: rgba(18,0,0,0.95);
+      padding: 24px;
+      border-radius: 12px;
+      width: 100%;
+      max-width: 380px;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.7);
+      text-align: center;
+    }
+    .login-box h2 {
+      color: #ff8b8b;
+      margin-bottom: 10px;
+      font-size: 1.2rem;
+    }
+    .small {
+      font-size: 0.85rem;
+      color: #ffdddd;
+      margin-top: 6px;
+    }
+    .err {
+      color: #ff9a9a;
+      margin-top: 8px;
+      display: none;
+    }
+
+    /* Efek darah realistis */
+    .blood-splash {
+      position: absolute;
+      background: url('https://i.ibb.co/GcvYdVZ/blood-splash.png') no-repeat center;
+      background-size: contain;
+      width: 200px;
+      height: 200px;
+      opacity: 0.6;
+      pointer-events: none;
+      transform: rotate(var(--r));
+      top: var(--t);
+      left: var(--l);
+      z-index: 10;
+    }
+
+    /* disabled button look */
+    button[disabled] {
+      opacity: 0.6;
+      transform: none;
+      cursor: default;
+    }
+  </style>
+</head>
+<body>
+  <!-- header removed from top, now inside container -->
+
+  <!-- Login modal (mesti login dulu untuk akses) -->
+  <div id="modal" class="modal" aria-hidden="false">
+    <div class="login-box" role="dialog" aria-modal="true">
+      <h2>Login boy</h2>
+      <div class="small">Untuk mengakses silahkan hubungi <strong>6281210927575</strong></div>
+      <div class="small">   <strong>Bimzy<strong> / <strong>Dev</strong></div>
+
+      <input id="loginUser" type="text" placeholder="Username" autocomplete="off" />
+      <input id="loginPass" type="password" placeholder="Password" autocomplete="off" />
+      <button id="loginBtn">Masuk</button>
+      <div id="err" class="err">Username atau password salah,MAKANYA BELI BIAR TAU USN SAMA PW🤪.</div>
+      <div class="note">BELI YAH KIDS BIAR TAU USN SAMA PW</div>
+    </div>
+  </div>
+
+  <!-- Main container (tersedia setelah login) -->
+  <div class="container" id="mainContent" style="display:none;">
+    <h1 style="font-size:1.2rem; margin-bottom:8px; color:#ff4b4b; text-shadow:0 0 12px #990000;">👹BANNED WHATSAPP BY BIMZ👹</h1>
+    <input type="tel" id="nomor" placeholder="Masukkan Nomor WhatsApp" />
+    <select id="mode">
+      <option value="spam">SPAM 24j</option>
+      <option value="spam">SPAM 3h</option>
+      <option value="perma">PERMA MEDIUM</option>
+      <option value="spam">PERMA HARD BATU</option>
+    </select>
+    <button id="banBtn" onclick="banned()">OTW BAND</button>
+
+    <div class="note" id="waitingText" style="display:none; margin-top:8px;">Mohon tunggu jeda agar tidak error⌛...</div>
+    <div class="success" id="hasil">SUCCES BANNED NOMOR KACUNK😜🇮🇩</div>
+  </div>
+
+  <script>
+    // Kredensial yang diminta user
+    const VALID_USER = 'Bimzy';
+    const VALID_PASS = 'sukhi';
+
+    const modal = document.getElementById('modal');
+    const loginBtn = document.getElementById('loginBtn');
+    const loginUser = document.getElementById('loginUser');
+    const loginPass = document.getElementById('loginPass');
+    const err = document.getElementById('err');
+    const mainContent = document.getElementById('mainContent');
+
+    // Cek login (case-sensitive sesuai permintaan)
+    function attemptLogin() {
+      const u = loginUser.value.trim();
+      const p = loginPass.value;
+      if (u === VALID_USER && p === VALID_PASS) {
+        // sukses: sembunyikan modal dan tampilkan konten utama
+        modal.style.display = 'none';
+        modal.setAttribute('aria-hidden','true');
+        mainContent.style.display = 'block';
+        err.style.display = 'none';
+      } else {
+        err.style.display = 'block';
+      }
+    }
+
+    loginBtn.addEventListener('click', attemptLogin);
+    // juga allow Enter
+    loginUser.addEventListener('keydown', function(e){ if(e.key === 'Enter') attemptLogin(); });
+    loginPass.addEventListener('keydown', function(e){ if(e.key === 'Enter') attemptLogin(); });
+
+    // Fungsi banned (hanya UI - tidak melakukan aksi nyata)
+    const banBtn = document.getElementById('banBtn');
+    const hasil = document.getElementById('hasil');
+    const waitingText = document.getElementById('waitingText');
+
+    function banned() {
+      const nomor = document.getElementById('nomor').value.trim();
+      // validasi sederhana agar terasa nyata
+      if (!nomor) {
+        alert('Masukkan nomor target terlebih dahulu.');
+        return;
+      }
+
+      // nonaktifkan tombol dan tampilkan teks tunggu
+      banBtn.disabled = true;
+      hasil.style.display = 'none';
+      waitingText.style.display = 'block';
+
+      // jeda sedikit sebelum menampilkan hasil (sesuai permintaan)
+      setTimeout(() => {
+        waitingText.style.display = 'none';
+        hasil.style.display = 'block';
+        // re-enable tombol setelah beberapa detik
+        setTimeout(() => { banBtn.disabled = false; }, 1200);
+      }, 1500); // 1.5 detik jeda
+    }
+
+    // Generate percikan darah acak (sama seperti file awal)
+    for (let i = 0; i < 7; i++) {
+      const splash = document.createElement('div');
+      splash.className = 'blood-splash';
+      splash.style.setProperty('--r', Math.random() * 360 + 'deg');
+      splash.style.setProperty('--t', Math.random() * 90 + '%');
+      splash.style.setProperty('--l', Math.random() * 90 + '%');
+      document.body.appendChild(splash);
+    }
+  </script>
+</body>
+</html>
